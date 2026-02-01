@@ -1,0 +1,16 @@
+{
+  "name": "SirenX Emergency Response",
+  "short_name": "SirenX",
+  "description": "Real-time emergency coordination system",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dc2626",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
