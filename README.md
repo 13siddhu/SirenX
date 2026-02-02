@@ -28,12 +28,50 @@
 ## 📁 Project Structure
 
 ```
-├── app/                # Next.js App Router (Citizen, Admin, Driver views)
-├── components/         # Reusable UI (Map wrappers, SOS buttons)
-├── hooks/              # Custom hooks for Geolocation and Socket logic
-├── public/             # PWA Manifest and Service Workers
-├── server.js           # Custom Node.js + Socket.io server
-└── lib/                # Database configurations and utilities
+SirenX/
+├── app/                        # Next.js App Router (Frontend + API)
+│   ├── (auth)/                 # Group for Login/Signup (Drivers & Admins)
+│   │   ├── login/page.jsx
+│   │   └── signup/page.jsx
+│   ├── citizen/                # The "One-Tap SOS" Interface
+│   │   └── page.jsx
+│   ├── driver/                 # Responder view (Navigation & Status)
+│   │   └── page.jsx
+│   ├── admin/                  # Live Dashboard for Dispatchers
+│   │   ├── page.jsx
+│   │   └── analytics/page.jsx
+│   ├── api/                    # Backend API Routes
+│   │   ├── sos/route.js        # Logic for creating new emergencies
+│   │   ├── ambulances/route.js # Logic for fetching nearby units (PostGIS)
+│   │   └── auth/route.js       # JWT / Session management
+│   ├── layout.js               # Global Root Layout
+│   └── page.js                 # Landing Page
+├── components/                 # Reusable UI Blocks
+│   ├── Map/                    # Leaflet/Google Maps wrapper
+│   │   ├── MapContainer.jsx
+│   │   └── MarkerIcon.jsx
+│   ├── Dashboard/              # Admin UI components
+│   │   ├── EmergencyCard.jsx
+│   │   └── StatsPanel.jsx
+│   └── UI/                     # Shared Atomic components
+│       ├── SOSButton.jsx
+│       └── OfflineBadge.jsx
+├── hooks/                      # Custom Logic (The "Smart" part)
+│   ├── useSocket.js            # Socket.io connection manager
+│   ├── useGeolocation.js       # Real-time GPS tracking logic
+│   └── useOfflineSync.js       # IndexedDB auto-sync logic
+├── lib/                        # Backend Utilities
+│   ├── db.js                   # PostgreSQL (Prisma or PG-Pool) setup
+│   ├── socket.js               # Socket.io server-side config
+│   └── utils.js                # Helper functions (distance calc, etc)
+├── public/                     # Static Assets & PWA files
+│   ├── icons/                  # App icons for different devices
+│   ├── manifest.json           # Crucial for PWA installation
+│   └── sw.js                   # Service Worker (Offline caching logic)
+├── store/                      # Global State (Zustand or Redux)
+│   └── useEmergencyStore.js    # Shared state between components
+├── server.js                   # Custom Node.js/Socket.io Server
+└── .env                        # Database URLs & API Keys
 ```
 
 ---
@@ -43,7 +81,7 @@
 ### 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/sirenx.git
+git clone https://github.com/13siddhu/SirenX.git
 cd sirenx
 ```
 
