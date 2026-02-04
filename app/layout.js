@@ -2,6 +2,16 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 
+// ✅ Clerk imports
+import {
+  ClerkProvider,
+  SignedOut,
+  SignedIn,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,16 +37,29 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>
-        {/* Manual links for better PWA support across browsers */}
-        <link rel="apple-touch-icon" href="/icon-192.png" />
-      </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* This component handles the Service Worker registration */}
-        <ServiceWorkerRegistration />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <head>
+          <link rel="apple-touch-icon" href="/icon-192.png" />
+        </head>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+
+          {/* 🔐 Auth Buttons in Top Right */}
+          <header className="flex justify-end items-center p-4 gap-4 h-16">
+            <SignedOut>
+                <SignInButton mode="redirect" redirectUrl="/login" />
+                <SignUpButton mode="redirect" redirectUrl="/signup">
+                  <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm h-10 px-4">
+                    Sign Up
+                  </button>
+                </SignUpButton>
+            </SignedOut>
+          </header>
+
+          <ServiceWorkerRegistration />
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
